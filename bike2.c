@@ -25,8 +25,6 @@
 #include <j_lib2m.h>
 #include "bike.h"
 
-char *rev_bike2_c = "$Id: bike2.c,v 3.1 2021/12/20 19:13:19 jmccue Exp $";
-
 /*
  * bike_write_heading() -- Prints out heading area
  */

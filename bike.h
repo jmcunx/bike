@@ -16,7 +16,7 @@
  */
 #ifndef REV_BIKE_H
 
-#define REV_BIKE_H "$Id: bike.h,v 3.1 2021/12/20 19:13:17 jmccue Exp $"
+#define REV_BIKE_H "INCLUDED"
 
 #define MAX_SPROCKETS 50
 

@@ -31,10 +31,6 @@
 #include <j_lib2m.h>
 #include "bike.h"
 
-#define REV_BIKE1 "$Id: bike1.c,v 3.1 2021/12/20 19:13:18 jmccue Exp $"
-extern char *rev_bike_c;
-extern char *rev_bike2_c;
-
 #define USG_MSG_BIKE_1 "\tCalculate Bicycle Gear Inches\n"
 
 /*
@@ -45,16 +41,8 @@ int show_rev(struct s_work *w)
 {
 
   fprintf(w->err.fp,"%s:\n", LIT_REV);
-  fprintf(w->err.fp,"\t%s\n", rev_bike_c);
-  fprintf(w->err.fp,"\t%s\n", REV_BIKE1);
-  fprintf(w->err.fp,"\t%s\n", rev_bike2_c);
-  fprintf(w->err.fp,"\t%s\n", REV_BIKE_H);
 
-#ifdef J_LIB2M_H
-  fprintf(w->err.fp, "\t%s\n", J_LIB2M_H);
-#endif
 #ifdef J_LIB2_H
-  fprintf(w->err.fp, "\t%s\n", J_LIB2_H);
   fprintf(w->err.fp, "\t%s %s\n", LIT_INFO_02, j2_get_build());
 #endif
 #ifdef OSTYPE

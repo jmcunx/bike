@@ -25,8 +25,6 @@
 
 #include "bike.h"
 
-char *rev_bike_c = "$Id: bike.c,v 3.1 2021/12/20 19:13:15 jmccue Exp $";
-
 /*
  * main()
  */

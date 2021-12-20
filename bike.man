@@ -78,7 +78,6 @@ Optional, output version information and exit.
 -w size
 Required, wheel size, can be either inches or cm.
 If 'size' < 100, assumes inches, > 99 assumes cm.
-
 .SH DIAGNOSTICS
 Option PI does not effect gear inches, it will only
 change the calculations used in the verbose report.
@@ -97,13 +96,10 @@ for both front and rear is 50, this gives
 a maximum of 2500 gears.
 I doubt any bicycle will ever come close
 to that number of sprockets.
-
 .SH BUGS
 Do not know of any.
-
 .SH ENVIRONMENT
 none.
-
 .SH ERROR CODES
 .nf
 0 success
