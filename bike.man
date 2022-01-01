@@ -1,11 +1,11 @@
-.\" 
-.\" Copyright (c) 1993 ...  2021 2022
+.\"
+.\" Copyright (c) 1993 ...  2022 2023
 .\"     John McCue <jmccue@jmcunx.com>
-.\" 
+.\"
 .\" Permission to use, copy, modify, and distribute this software for any
 .\" purpose with or without fee is hereby granted, provided that the above
 .\" copyright notice and this permission notice appear in all copies.
-.\" 
+.\"
 .\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
 .\" WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
 .\" MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
@@ -13,12 +13,12 @@
 .\" WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 .\" ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 .\" OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-.\" 
-.TH bike 1 "2011/05/15" "JMC" "User Commands"
+.\"
+.TH BIKE 1 "2011-05-15" "JMC" "User Commands"
 .SH NAME
 bike - Calculate Bike Gear Inches
 .SH SYNOPSIS
-bike OPTIONS 
+bike OPTIONS
 .SH DESCRIPTION
 Calculate Bicycle Gear Inches.
 .SH OPTIONS
@@ -61,10 +61,10 @@ Show Detail Gear Inch Information.
 Defaults is to only show Gear Matrix Chart.
 This option will show these items per gear inch:
 .nf
-    o Inches per each Pedal Revolution 
-    o Feet per each Pedal Revolution 
-    o Miles per each Pedal Revolution 
-    o Number of Pedals per Mile 
+    o Inches per each Pedal Revolution
+    o Feet per each Pedal Revolution
+    o Miles per each Pedal Revolution
+    o Number of Pedals per Mile
     o MPH at 70 RPM (pedals per minute)
     o MPH at 80 RPM (pedals per minute)
     o MPH at 90 RPM (pedals per minute)
@@ -83,7 +83,7 @@ Option PI does not effect gear inches, it will only
 change the calculations used in the verbose report.
 .PP
 Does not produce 100% exact gear inches.
-Tire width, pressure and other factors could 
+Tire width, pressure and other factors could
 generate different results, but it gives a close
 approximation.
 For more exact values see site:
