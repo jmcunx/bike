@@ -34,36 +34,36 @@ OSDESC != uname -smr
 LIBJLIB2=-L$(DESTDIR)/lib64
 
 #--- Linux 32 bit
-#WALL=-Wall
-#ETAGS=etags
-#GZ=.gz
-#NROFF=cat
-#OSDESC != uname -smr
-#LIBJLIB2=-L$(DESTDIR)/lib
+#LINUX32#WALL=-Wall
+#LINUX32#ETAGS=etags
+#LINUX32#GZ=.gz
+#LINUX32#NROFF=cat
+#LINUX32#OSDESC != uname -smr
+#LINUX32#LIBJLIB2=-L$(DESTDIR)/lib
 
 #--- BSD 64 bit
-#WALL=-Wall -m64
-#ETAGS=etags
-#GZ=.gz
-#NROFF=cat
-#OSDESC != uname -smr
-#LIBJLIB2=-L$(DESTDIR)/lib
+#BSD#WALL=-Wall -m64
+#BSD#ETAGS=etags
+#BSD#GZ=.gz
+#BSD#NROFF=cat
+#BSD#OSDESC != uname -smr
+#BSD#LIBJLIB2=-L$(DESTDIR)/lib
 
 #--- BSD 32 bit
-#WALL=-Wall
-#ETAGS=etags
-#GZ=.gz
-#NROFF=cat
-#OSDESC != uname -smr
-#LIBJLIB2=-L$(DESTDIR)/lib
+#BSD32#WALL=-Wall
+#BSD32#ETAGS=etags
+#BSD32#GZ=.gz
+#BSD32#NROFF=cat
+#BSD32#OSDESC != uname -smr
+#BSD32#LIBJLIB2=-L$(DESTDIR)/lib
 
 #--- AIX specific
-#WALL=-bnoquiet
-#ETAGS=true
-#GZ=
-#NROFF=nroff -man
-#OSDESC = `uname -a`
-#LIBJLIB2=-L$(DESTDIR)/lib
+#AIX#WALL=-bnoquiet
+#AIX#ETAGS=true
+#AIX#GZ=
+#AIX#NROFF=nroff -man
+#AIX#OSDESC = `uname -a`
+#AIX#LIBJLIB2=-L$(DESTDIR)/lib
 
 #--- should not have to change these
 NROFF=nroff -man
