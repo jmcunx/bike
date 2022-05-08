@@ -96,7 +96,7 @@ void init_file(struct s_file *f)
 {
 
   f->fp      = (FILE *) NULL;
-  f->is_open = (int) FALSE;
+  f->is_open = FALSE;
 
 } /* init_file() */
 
@@ -107,21 +107,25 @@ void leave_prog(int rmode, int rc, struct s_work *w)
 {
 
 
-  if (rmode == (int) TRUE)
+  if (rmode == TRUE)
     fprintf(w->err.fp, MSG_ERR_E000, "bike", SWITCH_CHAR, ARG_HELP);
 
-  if (w->out.is_open)
+  if (w->out.is_open == TRUE)
     {
       fclose(w->out.fp);
       init_file(&(w->out));
       w->out.fp = stdout;
     }
-  if (w->err.is_open)
+
+  if (w->err.is_open == TRUE)
     {
       fclose(w->err.fp);
       init_file(&(w->err));
       w->err.fp = stderr;
     }
+
+  if (w->title != (char *) NULL)
+    free(w->title);
 
   exit(rc);
 
@@ -134,33 +138,32 @@ int open_out(FILE *wfp, struct s_file *f, char *fname, int force)
 
 {
 
-  int errsave;
-
   if (fname == (char *) NULL)
-    return((int) TRUE);
+    return(TRUE);
 
-  if (force == (int) FALSE)
+  if (force == FALSE)
     {
       if ( j2_f_exist(fname) )
 	{
 	  fprintf(wfp, MSG_ERR_E025, fname);
-	  return((int) FALSE);
+	  return(FALSE);
 	}
     }
 
 
   f->fp = fopen(fname, "w");
-  errsave = errno;
   if (f->fp == (FILE *) NULL)
     {
       f->fp = stderr;  /* needs to be something */
       fprintf(wfp, MSG_ERR_E002, fname);
-      fprintf(wfp, "\t%s\n", strerror(errsave));
-      return((int) FALSE);
+      fprintf(wfp, "\t%s\n", strerror(errno));
+      return(FALSE);
     }
 
   /*** success, save file name ***/
-  return((int) TRUE);
+  f->is_open = TRUE;
+  return(TRUE);
+
 } /* open_out() */
 
 /*
@@ -176,11 +179,11 @@ void get_args(struct s_work *w, int argc, char **argv, char **front, char **rear
   char *a_front    = (char *) NULL;
   char *a_wheel    = (char *) NULL;
   char *a_title    = (char *) NULL;
-  int display_rev  = (int) FALSE;
-  int display_help = (int) FALSE;
+  int display_rev  = FALSE;
+  int display_help = FALSE;
   int ok;
 #ifdef JHELP_LONG
-  int display_help_long = (int) FALSE;
+  int display_help_long = FALSE;
 #endif
 
 #ifdef JHELP_LONG
@@ -217,10 +220,10 @@ void get_args(struct s_work *w, int argc, char **argv, char **front, char **rear
       switch (opt)
 	{
 	  case ARG_VERBOSE:
-	    w->verbose = (int) TRUE;
+	    w->verbose = TRUE;
 	    break;
 	  case ARG_USE_PI:
-	    w->use_pi = (int) TRUE;
+	    w->use_pi = TRUE;
 	    break;
 	  case ARG_TITLE:
 	    a_title = optarg;
@@ -232,16 +235,16 @@ void get_args(struct s_work *w, int argc, char **argv, char **front, char **rear
 	    a_rear  = optarg;
 	    break;
 	  case ARG_FORCE:
-	    w->force = (int) TRUE;
+	    w->force = TRUE;
 	    break;
 	  case ARG_WHEEL:
 	    a_wheel = optarg;
 	    break;
 	  case ARG_HELP:
-	    display_help = (int) TRUE;
+	    display_help = TRUE;
 	    break;
 	  case ARG_VERSION:
-	    display_rev = (int) TRUE;
+	    display_rev = TRUE;
 	    break;
 	  case ARG_OUT:
 	    out_file = optarg;
@@ -251,21 +254,21 @@ void get_args(struct s_work *w, int argc, char **argv, char **front, char **rear
 	    break;
 #ifdef JHELP_LONG
 	  case ARG_HELP_LONG:
-	    display_help_long = (int) TRUE;
+	    display_help_long = TRUE;
 	    break;
 #endif
 	  default:
-	    leave_prog((int) TRUE, EXIT_FAILURE, w);
+	    leave_prog(TRUE, EXIT_FAILURE, w);
 	    break;
 	}
     }
 
   /*** open out files ***/
   ok = open_out(stderr, &(w->err), err_file, w->force);
-  if ( ok == (int) TRUE)
+  if ( ok == TRUE)
     ok = open_out(w->err.fp, &(w->out), out_file, w->force);
-  if (ok == (int) FALSE)
-    leave_prog((int) TRUE, EXIT_FAILURE, w);
+  if (ok == FALSE)
+    leave_prog(TRUE, EXIT_FAILURE, w);
 
   /*** show help/rev ? ***/
   ok = EXIT_SUCCESS;
@@ -278,7 +281,7 @@ void get_args(struct s_work *w, int argc, char **argv, char **front, char **rear
   if (display_rev)
     ok = show_rev(w);
   if (ok != EXIT_SUCCESS)
-    leave_prog((int) FALSE, EXIT_FAILURE, w);
+    leave_prog(FALSE, EXIT_FAILURE, w);
 
   /*** verify / save arguments ***/
   if (a_title != (char *) NULL)
@@ -286,21 +289,21 @@ void get_args(struct s_work *w, int argc, char **argv, char **front, char **rear
   if (a_rear == (char *) NULL)
     {
       fprintf(w->err.fp, MSG_ERR_E022, SWITCH_CHAR, ARG_REAR);
-      leave_prog((int) TRUE, EXIT_FAILURE, w);
+      leave_prog(TRUE, EXIT_FAILURE, w);
     }
   else
     (*rear) = strdup(a_rear);
   if (a_front == (char *) NULL)
     {
       fprintf(w->err.fp, MSG_ERR_E022, SWITCH_CHAR, ARG_FRONT);
-      leave_prog((int) TRUE, EXIT_FAILURE, w);
+      leave_prog(TRUE, EXIT_FAILURE, w);
     }
   else
     (*front) = strdup(a_front);
   if (a_wheel == (char *) NULL)
     {
       fprintf(w->err.fp, MSG_ERR_E022, SWITCH_CHAR, ARG_WHEEL);
-      leave_prog((int) TRUE, EXIT_FAILURE, w);
+      leave_prog(TRUE, EXIT_FAILURE, w);
     }
   else
     {
@@ -309,7 +312,7 @@ void get_args(struct s_work *w, int argc, char **argv, char **front, char **rear
       else
 	{
 	  fprintf(w->err.fp, MSG_ERR_E008, a_wheel, SWITCH_CHAR, ARG_WHEEL);
-	  leave_prog((int) TRUE, EXIT_FAILURE, w);
+	  leave_prog(TRUE, EXIT_FAILURE, w);
 	}
     }
 
@@ -323,13 +326,13 @@ void init_w(struct s_work *w)
 
   int i, max;
 
-  w->force           = (int) FALSE;
+  w->force           = FALSE;
   w->title           = (char *) NULL;
   w->wheel_size      = 0;
   w->diameter_cm     = (double) 0;
   w->diameter_inch   = (double) 0;
-  w->use_pi          = (int) FALSE;  /* PI seems inaccurate */
-  w->verbose         = (int) FALSE;
+  w->use_pi          = FALSE;  /* PI seems inaccurate */
+  w->verbose         = FALSE;
 
   /*** initialize sprocket tables ***/
   max = MAX_SPROCKETS + 1;
@@ -372,11 +375,11 @@ void sort_sprockets(int reverse, int *sprocket)
   if (last < 2)
     return;
 
-  sorted = (int) FALSE;
+  sorted = FALSE;
   
-  while (sorted == (int) FALSE)
+  while (sorted == FALSE)
     {
-      sorted = (int) TRUE;
+      sorted = TRUE;
       for (i = 0; i < last; i++)
 	{
 	  j = i + 1;
@@ -386,7 +389,7 @@ void sort_sprockets(int reverse, int *sprocket)
 	    test_result = sprocket[i] > sprocket[j];
 	  if (test_result)
 	    {
-	      sorted = (int) FALSE;
+	      sorted = FALSE;
 	      m = sprocket[i];
 	      sprocket[i] = sprocket[j];
 	      sprocket[j] = m;
@@ -411,7 +414,7 @@ int load_sprockets(struct s_sprocket *skt, char *s, struct s_work *w)
   if (s == (char *) NULL)
     {
       fprintf(w->err.fp, MSG_ERR_E029);
-      return((int) FALSE);
+      return(FALSE);
     }
 
   /*** Duplicate and split on ',' ***/
@@ -430,19 +433,19 @@ int load_sprockets(struct s_sprocket *skt, char *s, struct s_work *w)
 	      if (skt->sprockets[i] < 4)
 		{
 		  fprintf(w->err.fp, MSG_ERR_E032, skt->sprockets[i], 3);
-		  return((int) FALSE);
+		  return(FALSE);
 		}
 	    }
 	  else
 	    {
 	      fprintf(w->err.fp, MSG_ERR_E030, token);
-	      return((int) FALSE);
+	      return(FALSE);
 	    }
 	}
       else
 	{
 	  fprintf(w->err.fp, MSG_ERR_E031, MAX_SPROCKETS);
-	  return((int) FALSE);
+	  return(FALSE);
 	}
       i++;
       token = strtok((char *) NULL, ",");
@@ -450,7 +453,7 @@ int load_sprockets(struct s_sprocket *skt, char *s, struct s_work *w)
 
   /*** done ***/
   free(use_s);
-  return((int) TRUE);
+  return(TRUE);
 
 }  /* load_sprockets() */
 
@@ -480,16 +483,16 @@ void init(struct s_work *w, int argc, char **argv)
 
   /*** Load/split sprockets ***/
   if (! load_sprockets(&(w->front), front, w))
-    leave_prog((int) TRUE, EXIT_FAILURE, w);
+    leave_prog(TRUE, EXIT_FAILURE, w);
   if (! load_sprockets(&(w->rear), rear, w))
-    leave_prog((int) TRUE, EXIT_FAILURE, w);
-  sort_sprockets((int) FALSE, w->front.sprockets);
-  sort_sprockets((int) TRUE,  w->rear.sprockets);   /* reverse sort */
+    leave_prog(TRUE, EXIT_FAILURE, w);
+  sort_sprockets(FALSE, w->front.sprockets);
+  sort_sprockets(TRUE,  w->rear.sprockets);   /* reverse sort */
 
   if (w->wheel_size < 5)
     {
       fprintf(w->err.fp, MSG_ERR_E032, w->wheel_size, 5);
-      leave_prog((int) TRUE, EXIT_FAILURE, w);
+      leave_prog(TRUE, EXIT_FAILURE, w);
     }
 
   /*** Save Data ***/
@@ -503,5 +506,10 @@ void init(struct s_work *w, int argc, char **argv)
     w->diameter_cm = w->diameter_inch * (double) 2.54;
   w->circumference_cm   = w->diameter_cm   * PI;
   w->circumference_inch = w->diameter_inch * PI;
+
+  if (rear != (char *) NULL)
+    free(rear);
+  if (front != (char *) NULL)
+    free(front);
 
 } /* init() */

@@ -76,8 +76,14 @@ MKDIR=mkdir
 
 EXE=
 OBJ=.o
-CFLAGS=-c $(WALL) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
-LFLAGS=$(WALL) -LJLIBLOC -o bike $(LIBS)
+
+#--- for prod
+CFLAGS=-O1 -c $(WALL) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
+LFLAGS=-O1 $(WALL) -LJLIBLOC -o bike $(LIBS)
+
+#--- for valgrind
+#CFLAGS=-O0 -g -c $(WALL) -IINCJLIB -DOSTYPE="\"$(OSDESC)\""
+#LFLAGS=-O0 -g $(WALL) -LJLIBLOC -o bike $(LIBS)
 
 ALL_OBJ=bike$(OBJ) bike1$(OBJ) bike2$(OBJ) bikel$(OBJ)
 ALL_C=bike.c bike1.c bike2.c bikel.c
