@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1975,1993 ...  2021 2022
+ * Copyright (c) 1975,1993 ...  2023 2024
  *     John McCue <jmccue@jmcunx.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -20,8 +20,12 @@
 #endif
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
+#ifdef HAVE_JLIB
 #include <j_lib2.h>
 #include <j_lib2m.h>
+#endif
 
 #include "bike.h"
 

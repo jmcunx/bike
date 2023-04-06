@@ -6,7 +6,7 @@ Gear Ratios.
 I originally created this in 1975 using FORTRAN IV.
 I then translated to c in 1993.
 
-This requires [j\_lib2](https://github.com/jmcunx/j_lib2) to build.
+[j\_lib2](https://github.com/jmcunx/j_lib2) is an **optional** dependency.
 
 [GNU automake](https://en.wikipedia.org/wiki/Automake)
 only confuses me, but this seems to be good enough for me.
